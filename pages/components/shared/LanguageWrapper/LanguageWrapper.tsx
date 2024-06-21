@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useLanguage } from 'app/pages/hooks/useLanguage';
 import { useRouter } from 'next/router';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
 interface LanguageWrapperProps {
   frComponent?: ReactElement;
@@ -13,14 +15,22 @@ export const LanguageWrapper = ({
   defaultComponent,
 }: LanguageWrapperProps) => {
   const router = useRouter();
+  const { preferredLanguage, setPreferredLanguage } = useLanguage();
 
-  const locale = router.locale;
+  useEffect(() => {
+    const preferredLanguage = navigator.language.split('-')[0];
+    setPreferredLanguage(preferredLanguage);
+
+    router.push(router.pathname, router.pathname, {
+      locale: preferredLanguage,
+    });
+  }, [setPreferredLanguage]);
 
   return (
     <>
-      {locale === 'en' && enComponent ? (
+      {preferredLanguage === 'en' && enComponent ? (
         <enComponent.type {...enComponent.props} />
-      ) : locale === 'fr' && frComponent ? (
+      ) : preferredLanguage === 'fr' && frComponent ? (
         <frComponent.type {...frComponent.props} />
       ) : (
         <defaultComponent.type {...defaultComponent.props} />

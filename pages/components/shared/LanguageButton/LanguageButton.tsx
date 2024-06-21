@@ -1,11 +1,11 @@
-import { useRouter } from 'next/router';
+import { useLanguage } from 'app/pages/hooks/useLanguage';
 import React from 'react';
 
 export const LanguageButton = () => {
-  const router = useRouter();
+  const { setPreferredLanguage } = useLanguage();
 
   const changeLocale = (newLocale: string) => {
-    router.push(router.pathname, router.pathname, { locale: newLocale });
+    setPreferredLanguage(newLocale);
   };
   return (
     <>

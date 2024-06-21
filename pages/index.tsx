@@ -1,16 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import { LanguageWrapper } from './components/shared/LanguageWrapper/LanguageWrapper';
 import { LanguageButton } from './components/shared/LanguageButton/LanguageButton';
 
 const HomePage = () => {
-  const [browserLanguage, setBrowserLanguage] = useState<null | string>(null);
-
-  useEffect(() => {
-    const preferredLanguage = navigator.language.split('-')[0];
-
-    setBrowserLanguage(preferredLanguage);
-  }, []);
-
   return (
     <section>
       <LanguageWrapper
